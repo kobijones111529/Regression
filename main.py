@@ -1,3 +1,5 @@
+import regression
+
 import sys
 import random
 import math
@@ -25,45 +27,7 @@ def GetData(fileName):
 
 	return data
 
-points = GetData("data")
+data = GetData("data")
 
-a = random.randrange(-1, 1)
-b = random.randrange(-1, 1)
-r = 0.01
-
-se = [0 for x in range(5)]
-
-for i in range(1000):
-	e = 0
-	ga = 0
-	gb = 0
-	for p in points:
-		x = p[0]
-		y = p[1]
-		yp = a * x + b
-		e += (yp - y) ** 2 / float(2)
-		ga += (yp - y) * x
-		gb += (yp - y)
-
-	a -= r * ga
-	b -= r * gb
-
-	if i is 0:
-		for x in range(len(se)):
-			se[x] = e
-	else:
-		for x in range(1, len(se)):
-			se[len(se) - x] = se[len(se) - x - 1]
-
-		se[0] = e
-
-	ea = 0
-	for i in se:
-		ea += i
-
-	ea /= float(len(se))
-
-	print(" e: " + "{:.10f}".format(e))
-	print("ea: " + "{:.10f}".format(ea))
-	print("    a: " + (" " if a >= 0 else "") + "{:.10f}".format(a))
-	print("    b: " + (" " if b >= 0 else "") + "{:.10f}".format(b))
+res = regression.LinearRegression(data)
+print("a: {:.10f}\nb: {:.10f}".format(res[0], res[1]))
