@@ -1,9 +1,5 @@
 import regression
 
-import sys
-import random
-import math
-
 def GetData(fileName):
 	file = open(fileName, "r")
 	data_str = file.read()
